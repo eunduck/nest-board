@@ -5,3 +5,43 @@ DTO: DB에서 데이터를 얻어 service 나 controller 등으로 보낼 때 �
 Injectable 다른 컴포넌트에서 사용할 수 있다. 
 
 //1:41:00
+
+Pipe
+data transformation, data vlidation을 위해서 사용됩니다.
+컨츠롤러 경로 처리기에 의해 처리되는 인수에 대해 작동합니다.
+method(ex @Get) 으로 오기 전에 파이프를 통과한다.
+data transformaion?
+숫자형식에 문자 형식으로 오는 경우 파이프에서 자동으로 알맞은 형태에 맞게 바꿔준다.
+('7' -> 7)
+data validation?
+ex 자릿수 넘을 시 error!
+1. handler-level pipes,
+라우터 단계에서 ex @Get @Post 메소드 전체에
+2. parameter-level pipes
+3. global-level pipes
+전역적으로 반영
+4.built-in pipes
+Validation( ex dto ), ParseInt, PaseBoolean, ParseArray, ParaseUUID, DefaultValue Pipe
+
+2:11:00 커스텀 validation 생성
+
+TypeORM
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=test01 -e POSTGRES_USER=postgres -e POSTGRES_DB=board-app --name postgres_nest -d postgres
+docker exec -i -t postgres_nest bash
+
+객체지향 프로그래밍은 클래스를 사용. 관계형 데이터베이스는 데이터를 사용.
+
+npm install pg typeorm @nestjs/typeorm --save
+
+
+(depreacted) @EntityRepository
+클래스를 사용자 정의 저장소로 선언하는데 사용됩니다.
+repository https://velog.io/@jhsol24/NestJS-Repository-Pattern-구현하기
+1. ActiveRecord 패턴
+'export class Board extends BaseEntity{' 처럼 엔티티를 정의하고, 해당 엔티티를 초기화해서 사용.
+2. DataMapper 패턴
+Repository<엔티티>
+
+
+async await 처리가 된 값을 받는다(없다면 요청 후 처리되기 전 값을 받아버림. 처리중인 데이터)
+Promise 비동기 작업의 결과(기다렸다가 반환)
