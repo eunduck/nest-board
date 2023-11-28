@@ -5,30 +5,17 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardRepository } from './board.respository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from './board.entity';
+import { stat } from 'fs';
 
 @Injectable()
 export class BoardsService {
     constructor(private readonly boardRepository: BoardRepository) {}
 
-    // getAllBoards(): Board[] {
-    //     return this.boards;
-    // }
 
-    // //param 과 필드명이 동일하면 생략 가능
-    // createBoard(createBoardDto: CreateBoardDto) {
-    //     // const title = createBoardDto.title;
-    //     const {title, description } = createBoardDto;
-    //     const board: Board = {
-    //         id: uuid(),
-    //         title,
-    //         description,
-    //         status: BoardStatus.PUBLIC
-    //     }
-
-    //     this.boards.push(board);
-    //     return board;
-    // }
-
+    async getAll(): Promise <Board[]> {
+        return this.boardRepository.getAll();
+    }
+    
     async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
         const board = await this.boardRepository.createBoard(createBoardDto)
         return this.getBoardById(board.id);
@@ -43,26 +30,19 @@ export class BoardsService {
 
         return found;
     }
-    // getBoardById(id: string): Board {
-    //     const found = this.boards.find((board) => board.id === id);
 
-    //     if (!found) {
-    //         throw new NotFoundException(`Can't find Board with id ${id}`);
-    //     }
+    async deleteBoard(id: number): Promise<void> {
+        const result = await this.boardRepository.delete(id);
 
-    //     return found;
-    // }
+        console.log('result', result);
+    }
 
-    // deleteBoard(id: string): void {
-    //     const found = this.getBoardById(id);
+    async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+        //getBoardById 를 async 처리 해줬기 때문에 await 붙여줘야 한다.
+        const board = await this.getBoardById(id);
+        board.status = status;
+        await this.boardRepository.update(board)
 
-    //     //filter 같지 않은걸 제외하고
-    //     this.boards = this.boards.filter((board) => board.id !== found.id);
-    // }
-
-    // updateBoardStatus(id: string, status: BoardStatus): Board {
-    //     const board = this.getBoardById(id);
-    //     board.status = status;
-    //     return board;
-    // }
+        return board;
+    }
 }

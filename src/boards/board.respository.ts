@@ -12,6 +12,10 @@ export class BoardRepository {
         this.boardRepository = this.dataSource.getRepository(Board);
     }
 
+    async getAll(): Promise <Board[]> {
+        return this.boardRepository.find();
+    }
+
     createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
         const {title, description} = createBoardDto;
 
@@ -25,6 +29,14 @@ export class BoardRepository {
 
     getBoard(id: number) {
         return this.boardRepository.findOneBy({ id });
+    }
+
+    delete(id: number) {
+        return this.boardRepository.delete({ id });
+    }
+
+    update(board: Board): Promise<Board> {
+        return this.boardRepository.save(board);
     }
 
 }
