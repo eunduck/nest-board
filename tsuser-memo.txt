@@ -49,3 +49,17 @@ Promise 비동기 작업의 결과(기다렸다가 반환)
 3:22:00
 
 remove(id 필수), delete
+
+3:38:53 인증
+nest g module auth
+nest g controller auth --no-spec
+nest g service auth --no-spec
+
+4:10:20 비밀번호 암호화
+npm install bcryptjs --save
+
+레인보우 테이블: 모든 경우의 수를 저장한 곳
+bcrypt: '솔트 + 비밀번호' hash 한 값으로 안전하게.
+
+
+4:22:10 로그인 기능
