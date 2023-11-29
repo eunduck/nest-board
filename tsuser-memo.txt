@@ -63,3 +63,29 @@ bcrypt: '솔트 + 비밀번호' hash 한 값으로 안전하게.
 
 
 4:22:10 로그인 기능
+
+JWT json web token
+디지털 서명이 되어 있는 json 형태의 데이터 
+${header: token meta data alorithm}{payload user, expired info}{verify signature info }
+
+user login info(payload) * hashing 알고리즘 * secret text
+클라이언트에서 서버로 요청 보낼 때 header에 토큰을 담는다.
+클라이언트에서 온 header, payload 를 서버가 가지고 있는 secret text 를 가지고 verify signature를 만든다.
+클라리언트의 verify signature와 서버가 사용자 요청정보로 만든 verify signature가 동일하면 
+토큰이 맞다고 응답함.
+
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt --save
+
+Promise<{accessToken: string}> 
+
+4:50:00
+토큰을 이용한 사용자 정보 조회 -> 정상이면 DB 조회
+npm install @types/passport-jwt --save
+
+UserGuard(인증미들웨어)
+AuthGuard request의 return 값에 원하는 값이 들어간다.
+return 값 맵핑 + 토큰 검증 을 해준다. 
+
+request > header > token > payload > userInfo
+
+5:10:10
