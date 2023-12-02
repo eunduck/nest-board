@@ -3,6 +3,7 @@ import { Board } from "./board.entity";
 import { Injectable } from "@nestjs/common";
 import { CreateBoardDto } from "./dto/create-board.dto";
 import { BoardStatus } from "./board-status.enum";
+import { User } from "src/auth/user.entity";
 
 @Injectable()
 export class BoardRepository {
@@ -16,14 +17,16 @@ export class BoardRepository {
         return this.boardRepository.find();
     }
 
-    createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    createBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
         const {title, description} = createBoardDto;
 
         const board = ({
             title,
             description,
-            status: BoardStatus.PUBLIC
-        })
+            status: BoardStatus.PUBLIC,
+            user
+        });
+        console.log(board);
         return this.boardRepository.save(board);
     }
 

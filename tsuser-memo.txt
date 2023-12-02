@@ -90,5 +90,16 @@ request > header > token > payload > userInfo
 
 5:10:10
 
+UserGuard라는 custom decorator 를 만든다.
 인증된 사용자 정보를 가져온다. createParamDecorator 
 req.user 가 아닌 user 로 가져오는 방법
+
+
+인증된 사람만 데이터에 접근하도록
+사용하려는 서비스에 인증관련 userGuards, authGuard 를 사용.
+module: import AuthModule,
+controller: @UserGuard(AuthGuard())
+
+
+관계형성
+

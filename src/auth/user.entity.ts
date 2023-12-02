@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { type } from "os";
+import { Board } from "src/boards/board.entity";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 
 @Entity('user')
@@ -12,4 +14,8 @@ export class User extends BaseEntity {
 
     @Column()
     password: string;
+
+    // board 에서 부를 떄: board => board.user
+    @OneToMany(type => Board, board => board.user, { eager: true })
+    boards: Board[];
 }
