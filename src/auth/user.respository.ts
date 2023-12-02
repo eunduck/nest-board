@@ -32,7 +32,7 @@ export class UserRepository {
     async getUser(id: number): Promise<User> {
         return this.userRepository.findOneBy({ id });
     }
-    async findOne(username: string) {
+    async findOneByUsername(username: string) {
         return this.userRepository.findOneBy({ username: username });
     }
 }

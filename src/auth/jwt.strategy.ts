@@ -18,10 +18,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) { //jwt 설치했기
     //token 이 유효하면 실행되는 메소드
     async validate(payload) {
         const { username } = payload;
-        const user: User = await this.userRepository.findOne(username);
+        const user: User = await this.userRepository.findOneByUsername(username);
 
         if(!user) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('not found');
         }
+        return user;
     }
 }
